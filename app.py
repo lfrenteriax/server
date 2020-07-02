@@ -77,12 +77,12 @@ class FTPserverThread(threading.Thread):
             cmd=self.conn.recv(256)
             if not cmd: break
             else:
-                print 'Recieved:',cmd
+                print ('Recieved:',cmd)
                 try:
                     func=getattr(self,cmd[:4].strip().upper())
                     func(cmd)
                 except Exception,e:
-                    print e
+                    print (e)
                     #traceback.print_exc()
                     self.conn.send('500 Sorry.\r\n')
 
@@ -116,14 +116,14 @@ class FTPserverThread(threading.Thread):
         self.conn.send('257 \"%s\"\r\n' % cwd)
     def CWD(self,cmd):
         self.LoadCwd()
-        print 'NOW:',os.getcwd()
+        print ('NOW:',os.getcwd())
         chwd=cmd[4:-2]
         if chwd=='/':
             chwd=self.basewd
         elif chwd[0]=='/':
             chwd=self.basewd+chwd
         os.chdir(chwd)
-        print 'NOW:',os.getcwd()
+        print ('NOW:',os.getcwd())
         self.SaveCwd()
         self.conn.send('250 OK.\r\n')
 
@@ -158,10 +158,10 @@ class FTPserverThread(threading.Thread):
 
     def RETR(self,cmd):
         self.LoadCwd()
-        print 'NOW:',os.getcwd()
+        print ('NOW:',os.getcwd())
         fn=cmd[5:-2]
         #fn=self.cwd+'/'+fn
-        print 'Down:',fn
+        print ('Down:',fn)
         if self.mode=='I':
             fi=open(fn,'rb')
         else:
