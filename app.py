@@ -4,11 +4,11 @@ from pyftpdlib.authorizers import DummyAuthorizer
 
 import os
 PORT = int(os.environ.get("PORT", 2121))
-
+os.mkdir("images")
 class MyHandler(FTPHandler):
 
     def on_connect(self):
-        print "%s:%s connected" % (self.remote_ip, self.remote_port)
+        print ("%s:%s connected" % (self.remote_ip, self.remote_port))
 
     def on_disconnect(self):
         # do something when client disconnects
